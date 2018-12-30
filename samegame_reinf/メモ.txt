@@ -18,3 +18,5 @@ http://kakinotane.s7.xrea.com/delphi/d2/same1.html
 軽いゲームなので割と大きい盤面で学習した方がいいかな
 
 消せたブロックの数を報酬として。
+
+smgm.pyがゲーム作成部。うまくそっから参照してやろう。
