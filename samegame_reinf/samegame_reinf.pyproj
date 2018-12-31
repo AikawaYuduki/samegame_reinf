@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5ef47761-fdac-44b8-a877-758cb13e2fe3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>smgm.py</StartupFile>
+    <StartupFile>samegame_reinf.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
