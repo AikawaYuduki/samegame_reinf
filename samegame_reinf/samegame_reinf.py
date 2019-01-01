@@ -14,7 +14,7 @@ class QFunction(chainer.Chain):
             L0=L.Convolution2D(3 , 16, ksize=8, stride=1),
             L1=L.Convolution2D(16, 32, ksize=4, stride=1),
             L2=L.Convolution2D(32, 32, ksize=3, stride=1),
-            L3=L.Linear(2688, 512),
+            L3=L.Linear(1728, 512),
             L4=L.Linear(512, n_actions))
  
     def __call__(self, x, test=False):
@@ -65,18 +65,21 @@ for i in range(1, n_episodes + 1):
         same.click(action)
         #配置の結果、終了時には報酬とカウンタに値をセットして学習
         if same.is_clear() == True:
-            reward = same.score()
-            #エピソードを終了して学習
-            agent.stop_episode_and_train(same.board.copy(), reward, True)
+            reward = 1000
             break
         else:
             turns += 1
 
+    reward += same.score()
+    #エピソードを終了して学習
+    agent.stop_episode_and_train(b, reward, True)
+
     #コンソールに進捗表示
-    if i % 100 == 0:
+    if i % 1 == 0:
         print("episode:", i, " / reward:", reward ," / statistics:", agent.get_statistics(), " / epsilon:", agent.explorer.epsilon)
     if i % 1000 == 0:
         # 10000エピソードごとにモデルを保存
         agent_p1.save("result_" + str(i))
+
 
 print("Training finished.")

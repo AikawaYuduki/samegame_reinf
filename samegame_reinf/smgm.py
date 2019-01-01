@@ -3,7 +3,7 @@ import numpy as np
 
 #盤の縦横サイズ
 RAW = 15
-LINE = 40
+LINE = 30
 
 #ゲームのクラス
 class Game:
