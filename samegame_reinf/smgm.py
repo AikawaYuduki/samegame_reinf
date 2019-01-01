@@ -96,7 +96,7 @@ class Game:
     def yoko_tsume(self):
         tsumetakana = False
         #空じゃない列
-        empline = range(self.line)
+        empline = list(range(self.line))
         for i in range(self.line):
             #縦のリストを作ります
             self.tate_pos = [(j*self.line)+i for j in range(self.raw)]
@@ -135,16 +135,20 @@ class Game:
 
     #クリアしたかな？
     def is_clear(self):
-        self.done = False
+        self.done = True
         for i in range(self.n_mass):
             if self.exist_board(i)["right"]:
-                self.done = True
+                self.done = False
+                break
             if self.exist_board(i)["up"]:
-                self.done = True
+                self.done = False
+                break
             if self.exist_board(i)["left"]:
-                self.done = True
+                self.done = False
+                break
             if self.exist_board(i)["down"]:
-                self.done = True
+                self.done = False
+                break
             
         return self.done
 

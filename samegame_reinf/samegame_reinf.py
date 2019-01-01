@@ -51,13 +51,13 @@ agent = chainerrl.agents.DoubleDQN(
 
 #学習ゲーム回数
 n_episodes = 20000
-n_turn = 300
+n_turn = 100
 
 for i in range(1, n_episodes + 1):
     same.make_board()
     reward = 0
     turns = 0
-    while turns < 300:
+    while turns < n_turn:
         #配置マス取得
         b = same.torgb()
         action = agent.act_and_train(b, reward)
