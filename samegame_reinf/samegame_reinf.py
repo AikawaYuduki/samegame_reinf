@@ -5,6 +5,8 @@ import chainerrl
 import numpy as np
 import smgm
 from random import randint
+import cv2
+from time import sleep
 
 #盤面をRGBにします！！！！
 
@@ -63,6 +65,10 @@ for i in range(1, n_episodes + 1):
         action = agent.act_and_train(b, reward)
         #配置を実行
         same.click(action)
+        if i % 10 == 0:         
+            #image = cv2.resize(same.toimg(),(same.raw*20,same.line*20),cv2.INTER_CUBIC)
+            #cv2.imwrite("image/board"+str(i)+"/"+str(turns)+".jpg",image)
+            
         #配置の結果、終了時には報酬とカウンタに値をセットして学習
         if same.is_clear() == True:
             reward = 1000
@@ -77,6 +83,7 @@ for i in range(1, n_episodes + 1):
     #コンソールに進捗表示
     if i % 1 == 0:
         print("episode:", i, " / reward:", reward ," / statistics:", agent.get_statistics(), " / epsilon:", agent.explorer.epsilon)
+
     if i % 1000 == 0:
         # 10000エピソードごとにモデルを保存
         agent_p1.save("result_" + str(i))

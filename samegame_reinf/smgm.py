@@ -44,37 +44,38 @@ class Game:
 
     #隣が同じ色か
     def samecolor_a(self,pos):
-        #右
-        if self.exist_board(pos)["right"]:
-            if not self.checked[pos+1]:
-                if self.board[pos] == self.board[pos+1]:
-                    self.checked[pos+1] = True
-                    self.sames.append(pos+1)
-                    self.samecolor_a(pos+1)
+        if self.board[pos] != 0:
+            #右
+            if self.exist_board(pos)["right"]:
+                if not self.checked[pos+1]:
+                    if self.board[pos] == self.board[pos+1]:
+                        self.checked[pos+1] = True
+                        self.sames.append(pos+1)
+                        self.samecolor_a(pos+1)
 
-        #上
-        if self.exist_board(pos)["up"]:
-            if not self.checked[pos-self.line]:
-                if self.board[pos] == self.board[pos-self.line]:
-                    self.checked[pos-self.line] = True
-                    self.sames.append(pos-self.line)
-                    self.samecolor_a(pos-self.line)
+            #上
+            if self.exist_board(pos)["up"]:
+                if not self.checked[pos-self.line]:
+                    if self.board[pos] == self.board[pos-self.line]:
+                        self.checked[pos-self.line] = True
+                        self.sames.append(pos-self.line)
+                        self.samecolor_a(pos-self.line)
 
-        #左
-        if self.exist_board(pos)["left"]:
-            if not self.checked[pos-1]:
-                if self.board[pos] == self.board[pos-1]:
-                    self.checked[pos-1] = True
-                    self.sames.append(pos-1)
-                    self.samecolor_a(pos-1)
+            #左
+            if self.exist_board(pos)["left"]:
+                if not self.checked[pos-1]:
+                    if self.board[pos] == self.board[pos-1]:
+                        self.checked[pos-1] = True
+                        self.sames.append(pos-1)
+                        self.samecolor_a(pos-1)
 
-        #下
-        if self.exist_board(pos)["down"]:
-            if not self.checked[pos+self.line]:
-                if self.board[pos] == self.board[pos+self.line]:
-                    self.checked[pos+self.line] = True
-                    self.sames.append(pos+self.line)
-                    self.samecolor_a(pos+self.line)
+            #下
+            if self.exist_board(pos)["down"]:
+                if not self.checked[pos+self.line]:
+                    if self.board[pos] == self.board[pos+self.line]:
+                        self.checked[pos+self.line] = True
+                        self.sames.append(pos+self.line)
+                        self.samecolor_a(pos+self.line)
 
 
     def samecolor(self,pos):
@@ -89,8 +90,10 @@ class Game:
 
     #同じやつを消す
     def delete(self,pos):
-        for i in self.samecolor(pos):
-            self.board[i] = 0
+        self.samestemp = self.samecolor(pos)
+        if not len(self.samestemp) == 1:
+            for i in self.samestemp:
+                self.board[i] = 0
 
     #横を詰める
     def yoko_tsume(self):
@@ -153,7 +156,7 @@ class Game:
         return self.done
 
     def click(self,pos):
-        self.samecolor(pos)
+        #self.samecolor(pos)
         self.delete(pos)
         self.yoko_tsume()
         self.tate_tsume()
@@ -180,3 +183,13 @@ class Game:
         rgbboard = rgbboard.reshape([3,self.raw,self.line])
 
         return rgbboard
+
+    def toimg(self):
+        colors = {0:[0,0,0],1:[255,0,0],2:[0,255,0],3:[0,0,255],4:[255,255,255]}
+        image = [0 for i in range(self.n_mass)]
+        for i in range(self.n_mass):
+            image[i] = colors[self.board[i]]
+
+        image = np.array(image,dtype="uint8")
+        image = image.reshape([self.raw,self.line,3])
+        return image
