@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import os
 
 #盤の縦横サイズ
 RAW = 15
@@ -193,3 +194,11 @@ class Game:
         image = np.array(image,dtype="uint8")
         image = image.reshape([self.raw,self.line,3])
         return image
+
+    def print(self):
+        os.system("cls")
+        for j in range(self.raw):
+            for i in range(self.line):
+                print(self.board[(j*self.raw)+i],end=" ")
+
+            print("")
